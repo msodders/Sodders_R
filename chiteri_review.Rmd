@@ -19,6 +19,11 @@ SNPData <- read_tsv("https://raw.githubusercontent.com/EEOB-BioData/BCB546-Sprin
 FangData <- read_tsv("https://raw.githubusercontent.com/EEOB-BioData/BCB546-Spring2021/main/assignments/UNIX_Assignment/fang_et_al_genotypes.txt")
 ```
 	Step 2: Data Inspection
+	
+#Comment out this two since the dataframes have so many columns
+	
+#names(SNPData) 
+#names(FangData)
 ```{r}
   ncol(SNPData)
   ncol(FangData)
@@ -27,10 +32,7 @@ FangData <- read_tsv("https://raw.githubusercontent.com/EEOB-BioData/BCB546-Spri
 	typeof(SNPData)
 	typeof(FangData)
 	
-	#Comment out this two since the dataframes have so many columns
-	
-	#names(SNPData) 
-	#names(FangData)
+
 ```
 Step 3: Data Processing 
 *Separate Maize and Teosinte Data In Fang File and Head to check them*
@@ -42,8 +44,9 @@ FangData_Maize <- FangData[which(FangData$Group=="ZMMIL" | FangData$Group =="ZMM
 	head(FangData_Teosinte)
 ```
 *Prep SNP data*
-```{r}
 #Select snp_id, chromosome number and snp position
+```{r}
+
 SNPData_SpecificC <- SNPData[,c(1,3,4)]
 ```
 *Transpose Data*
@@ -65,18 +68,20 @@ MaizeData_joined <- merge(x = SNPData_SpecificC, y = MaizeData_trim, by.x = "SNP
 TeosinteData_joined <- merge(x = SNPData_SpecificC, y = TeosinteData_trim, by.x = "SNP_ID", by.y ="row.names", all.y = TRUE)
 ```
 *Make SNP Increasing*
-```{r}
 #If you could filter out the unknown and multiple files. it would be great
 
 #maiz_filtered <- filter(MaizeData_joined, Chromosome != 'unknown' | Chromosome != 'multiple')
+```{r}
+
 
 	MaizeData_joined <- MaizeData_joined[order(MaizeData_joined$Position),] 
 	TeosinteData_joined <- TeosinteData_joined[order(TeosinteData_joined$Position),]
 ```
 
 *Put Each increase chromosome in its own .csv File*
-```{r}
 #Great loop
+```{r}
+
 	for (a in 1:10){
   		MaizeData_Chromosome_Ordered <- MaizeData_joined[MaizeData_joined$Chromosome == a, ]
   		write.csv(MaizeData_Chromosome_Ordered, file= paste("Maize_chromosome", a, ".csv", sep=""), row.names = F)
@@ -93,6 +98,13 @@ MaizeData_joined_decrease <- MaizeData_joined[order(MaizeData_joined$Position, d
 TeosinteData_joined_decrease <- TeosinteData_joined[order(TeosinteData_joined$Position, decreasing=T),]
 ```
 *Put Each decrease chromosome in its own .csv File*
+
+#I noticed you were not able to complete a part of part of data processing.
+#Replacing ? with -
+#You could use this code to help you out
+
+#find "?" and replace "-", 
+#maize_data_replaced <- as_tibble(lapply(maize_data, gsub, pattern="?", replacement="-", fixed=TRUE))
 ```{r}
 for (a in 1:10){
  		MaizeData_DecreaseOrdered<-MaizeData_joined_decrease[MaizeData_joined_decrease$Chromosome == a, ]
@@ -103,18 +115,14 @@ for (a in 1:10){
   		write.csv(TeosinteData_joined_decrease, file= paste("Teosinte_chromosome", a, "d.csv", sep=""), row.names = F)
 	}
 
-#I noticed you were not able to complete a part of part of data processing.
-#Replacing ? with -
-#You could use this code to help you out
 
-#find "?" and replace "-", 
-#maize_data_replaced <- as_tibble(lapply(maize_data, gsub, pattern="?", replacement="-", fixed=TRUE))
 ```
 Step 4: Data Visualization 
 *Package Installation/Setup*
-```{r}
 #It is good to load all your packages at the start of the script
 #I think, you don't need to transpose the data here again. You can use the previous transposed dataframe
+```{r}
+
 library(ggplot2)
 library(tidyverse)
 library(reshape2)
@@ -127,8 +135,9 @@ FangData_SNPData_joined <- merge(x = SNPData_SpecificC, y = FangData_transposed2
 ```
 
 ##SNP/Chromosome
-```{r}
 #To put chromosomes in order
+```{r}
+
 FangData_SNPData_joined$Chromosome = factor(FangData_SNPData_joined$Chromosome, levels = c(1,2,3,4,5,6,7,8,9,10))
 
 ggplot(FangData_SNPData_joined, mapping = aes((Chromosome))) + geom_bar() + ggtitle("SNPs Per Chromosome") + labs(x="Chromosome",y="Total SNP Number")
