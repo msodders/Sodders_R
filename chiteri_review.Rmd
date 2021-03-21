@@ -8,7 +8,7 @@ output: html_document
 # Chiteri's review
 #Great work on this assignment Maggie!
 #I only have a few comments as suggested within the document
-#witihin ###***###
+
 
 
 ## R Homework Code 
@@ -27,7 +27,7 @@ FangData <- read_tsv("https://raw.githubusercontent.com/EEOB-BioData/BCB546-Spri
 	typeof(SNPData)
 	typeof(FangData)
 	
-	###Comment out this two since the dataframes have so many columns###
+	#Comment out this two since the dataframes have so many columns
 	
 	#names(SNPData) 
 	#names(FangData)
@@ -43,7 +43,7 @@ FangData_Maize <- FangData[which(FangData$Group=="ZMMIL" | FangData$Group =="ZMM
 ```
 *Prep SNP data*
 ```{r}
-####Select snp_id, chromosome number and snp position###)
+#Select snp_id, chromosome number and snp position
 SNPData_SpecificC <- SNPData[,c(1,3,4)]
 ```
 *Transpose Data*
@@ -66,9 +66,9 @@ TeosinteData_joined <- merge(x = SNPData_SpecificC, y = TeosinteData_trim, by.x 
 ```
 *Make SNP Increasing*
 ```{r}
-###If you could filter out the unknown and multiple files. it would be great###.
+#If you could filter out the unknown and multiple files. it would be great
 
-###maiz_filtered <- filter(MaizeData_joined, Chromosome != 'unknown' | Chromosome != 'multiple')###
+#maiz_filtered <- filter(MaizeData_joined, Chromosome != 'unknown' | Chromosome != 'multiple')
 
 	MaizeData_joined <- MaizeData_joined[order(MaizeData_joined$Position),] 
 	TeosinteData_joined <- TeosinteData_joined[order(TeosinteData_joined$Position),]
@@ -76,7 +76,7 @@ TeosinteData_joined <- merge(x = SNPData_SpecificC, y = TeosinteData_trim, by.x 
 
 *Put Each increase chromosome in its own .csv File*
 ```{r}
-###Great loop###
+#Great loop
 	for (a in 1:10){
   		MaizeData_Chromosome_Ordered <- MaizeData_joined[MaizeData_joined$Chromosome == a, ]
   		write.csv(MaizeData_Chromosome_Ordered, file= paste("Maize_chromosome", a, ".csv", sep=""), row.names = F)
@@ -103,7 +103,7 @@ for (a in 1:10){
   		write.csv(TeosinteData_joined_decrease, file= paste("Teosinte_chromosome", a, "d.csv", sep=""), row.names = F)
 	}
 
-####I noticed you were not able to complete a part of part of data processing.
+#I noticed you were not able to complete a part of part of data processing.
 #Replacing ? with -
 #You could use this code to help you out
 
@@ -113,8 +113,8 @@ for (a in 1:10){
 Step 4: Data Visualization 
 *Package Installation/Setup*
 ```{r}
-###It is good to load all your packages at the start of the script
-###I think, you don't need to transpose the data here again. You can use the previous transposed dataframe
+#It is good to load all your packages at the start of the script
+#I think, you don't need to transpose the data here again. You can use the previous transposed dataframe
 library(ggplot2)
 library(tidyverse)
 library(reshape2)
@@ -128,7 +128,7 @@ FangData_SNPData_joined <- merge(x = SNPData_SpecificC, y = FangData_transposed2
 
 ##SNP/Chromosome
 ```{r}
-###To put chromosomes in order
+#To put chromosomes in order
 FangData_SNPData_joined$Chromosome = factor(FangData_SNPData_joined$Chromosome, levels = c(1,2,3,4,5,6,7,8,9,10))
 
 ggplot(FangData_SNPData_joined, mapping = aes((Chromosome))) + geom_bar() + ggtitle("SNPs Per Chromosome") + labs(x="Chromosome",y="Total SNP Number")
