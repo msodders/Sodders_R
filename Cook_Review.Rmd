@@ -3,7 +3,7 @@ title: "Tanner Review of Maggie Sodders"
 output: html_document
 ---
  
-# Hi Maggie, Great job on  the assignment. My suggestions are designated with a number symbol (#)
+# Hi Maggie, Great job on  the assignment. My suggestions are designated with a number symbol (#).
 
 ## R Homework Code 
 Step 1: Get Data Into R
@@ -13,7 +13,7 @@ SNPData <- read_tsv("https://raw.githubusercontent.com/EEOB-BioData/BCB546-Sprin
 FangData <- read_tsv("https://raw.githubusercontent.com/EEOB-BioData/BCB546-Spring2021/main/assignments/UNIX_Assignment/fang_et_al_genotypes.txt")
 ```
 	Step 2: Data Inspection
-# You can also use >tail to ensure that nothing weird is added to the end of the file as well as dimensions to determine the size of the table
+# You can also use >tail to ensure that nothing weird is added to the end of the file as well as dimensions to determine the size of the table.
 tail(SNPData)
 tail(FangData)
 dim(SNPData)
@@ -39,7 +39,7 @@ FangData_Maize <- FangData[which(FangData$Group=="ZMMIL" | FangData$Group =="ZMM
 ```
 *Prep SNP data*
 
-#I liked that you preprocessed the SNP_Data
+#I liked that you preprocessed the SNP_Data.
 ```{r}
 SNPData_SpecificC <- SNPData[,c(1,3,4)]
 ```
@@ -57,9 +57,9 @@ TeosinteData_transposed <- as.data.frame(t(FangData_Teosinte))
 ```
 *Join SNP and Fang Data*
 
-# I like your approach here to merge the files. For me, however I like having  the SNP_ID's out of the row name columns in it's own file allowing to work with it in the future if I need it. Below is the code for that:
+# I like your approach here to merge the files. For me, however, I like having  the SNP_ID's out of the row name columns in it's own file thus allowing me to work with it in the future if I need it. Below is the code for that:
 # X = rownames_to_column(TeosinteData_trim, 'SNP_ID')
-# I would then merge the two file on "SNP_ID'
+# I would then merge the two file on "SNP_ID'.
 # Join_SNP_Geno= right_join(SNPData_SpecificC,X, by ='SNP_ID')
 ```{r}
 MaizeData_joined <- merge(x = SNPData_SpecificC, y = MaizeData_trim, by.x = "SNP_ID", by.y ="row.names", all.y = TRUE)
