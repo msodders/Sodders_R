@@ -3,7 +3,7 @@ title: "Tanner Review of Maggie Sodders"
 output: html_document
 ---
  
-# Hi Maggie, Great job on  the assignment. I only have a few suggestions and they are made within.
+# Hi Maggie, Great job on  the assignment. My suggestions are designated with a number symbol (#)
 
 ## R Homework Code 
 Step 1: Get Data Into R
